@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import Calendar from "./Calendar";
+import Schedule from "./Schedule";
+import { BrowserRouter as Router, Route } from 'react-dom';
+import axios from 'axios';
 
-function App() {
+axios.defaults.baseURL = 'http://localhost:4000/'
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <Router>
+          <Route exact path="/" component={Calendar} />
+          <Route path="/schedule/:id" component={Schedule} />
+        </Router>
     </div>
   );
 }
