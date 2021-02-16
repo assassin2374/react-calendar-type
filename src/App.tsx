@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Calendar from "./Calendar";
 import Schedule from "./Schedule";
-import { BrowserRouter as Router, Route } from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:4000/'

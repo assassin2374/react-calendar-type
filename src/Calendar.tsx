@@ -3,30 +3,8 @@ import './Calendar.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
-const sampleData=[
-  {
-    mon:1,
-    day:17,
-  },
-  {
-    mon:1,
-    day:18,
-  },
-  {
-    mon:1,
-    day:19,
-  }
-];
 
-const sampleUser=[
-  {
-    id:0,
-    name:'matsumoto',
-    pass:'passward'
-  }
-];
-
-const convertDateToString=(date)=>{
+const convertDateToString=(date:Date)=>{
   //date.setDate(date.getDate());
   const yyyy = date.getFullYear();
   const mm = ("0"+(date.getMonth()+1)).slice(-2);
@@ -38,7 +16,6 @@ const Calendar = () => {
   const [scheduleList, setScheduleList] = useState([]);
   const [contents, setContents] = useState([]);
   const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
-  const [user, setUser] = useState(sampleUser);
 
   const history = useHistory();
 
@@ -50,14 +27,14 @@ const Calendar = () => {
     getScheduleList();
   }, [setScheduleList]);
 
-  const addYmdData=(e)=>{
+  const addYmdData=(e:React.ChangeEvent<HTMLInputElement>)=>{
     if(e.target.value.length !== 0){
       setYmdData(e.target.value);
       console.log(ymdData);
     }
   }
 
-  const addContents=(e)=>{
+  const addContents=(e:React.ChangeEvent<HTMLInputElement>)=>{
     setContents(e.target.value);
   }
   
