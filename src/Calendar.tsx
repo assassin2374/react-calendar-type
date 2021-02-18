@@ -3,6 +3,13 @@ import './Calendar.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
+type Schedule ={
+  id:number,
+  user_id:number,
+  ymdData:string,
+  contents:string,
+};
+
 
 const convertDateToString=(date:Date)=>{
   //date.setDate(date.getDate());
@@ -14,7 +21,7 @@ const convertDateToString=(date:Date)=>{
 
 const Calendar = () => {
   const [scheduleList, setScheduleList] = useState([]);
-  const [contents, setContents] = useState([]);
+  const [contents, setContents] = useState('');
   const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
 
   const history = useHistory();
@@ -35,14 +42,15 @@ const Calendar = () => {
   }
 
   const addContents=(e:React.ChangeEvent<HTMLInputElement>)=>{
-    setContents(e.target.value);
+    const value:string = String(e.target.value);
+    setContents(value);
   }
   
   const addSchedule=async()=>{
     if(contents==='')return;
     let newId = 0;
     if(scheduleList.length > 0){
-      newId = Math.max(...scheduleList.map((todo)=>todo.id)) + 1;
+      newId = Math.max(...scheduleList.map((todo:Schedule=>todo.id)) + 1;
     }
     const newScheduleList = scheduleList.slice();
     const newSchedule ={
