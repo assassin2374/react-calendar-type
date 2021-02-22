@@ -2,14 +2,21 @@ import { useState, useEffect } from 'react';
 import './Calendar.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import { idText } from 'typescript';
 
-type Schedule ={
+type Schedule = {
   id:number,
   user_id:number,
   ymdData:string,
   contents:string,
 };
 
+// const sampleSchedule:new Schedule={
+//   id:0,
+//   user_id:0,
+//   ymdData:'',
+//   contents:'',
+// };
 
 const convertDateToString=(date:Date)=>{
   //date.setDate(date.getDate());
@@ -20,7 +27,7 @@ const convertDateToString=(date:Date)=>{
 };
 
 const Calendar = () => {
-  const [scheduleList, setScheduleList] = useState([]);
+  const [scheduleList, setScheduleList] = useState(new Schedule=>{id:0,user_id:0,ymdData:'',contents:'',});
   const [contents, setContents] = useState('');
   const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
 
@@ -50,7 +57,8 @@ const Calendar = () => {
     if(contents==='')return;
     let newId = 0;
     if(scheduleList.length > 0){
-      newId = Math.max(...scheduleList.map((todo:Schedule=>todo.id)) + 1;
+      newId = Math.max(...scheduleList.map((todo=>todo.id)));
+      newId++;
     }
     const newScheduleList = scheduleList.slice();
     const newSchedule ={
