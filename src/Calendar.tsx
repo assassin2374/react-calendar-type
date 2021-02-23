@@ -11,12 +11,12 @@ type Schedule = {
   contents:string,
 };
 
-// const sampleSchedule:new Schedule={
-//   id:0,
-//   user_id:0,
-//   ymdData:'',
-//   contents:'',
-// };
+const sampleSchedule:Schedule={
+  id:0,
+  user_id:0,
+  ymdData:'',
+  contents:'',
+};
 
 const convertDateToString=(date:Date)=>{
   //date.setDate(date.getDate());
@@ -27,7 +27,7 @@ const convertDateToString=(date:Date)=>{
 };
 
 const Calendar = () => {
-  const [scheduleList, setScheduleList] = useState(new Schedule=>{id:0,user_id:0,ymdData:'',contents:'',});
+  const [scheduleList, setScheduleList] = useState<Schedule[]>([sampleSchedule]);
   const [contents, setContents] = useState('');
   const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
 
@@ -64,9 +64,7 @@ const Calendar = () => {
     const newSchedule ={
       id:newId,
       user_id:1,
-      year:ymdData.split[0],
-      month:ymdData.split[1],
-      day:ymdData.split[2],
+      ymdData:ymdData,
       contents:contents,
     };
 
