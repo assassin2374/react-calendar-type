@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import './Schedule.css';
 import { useHistory, useParams } from "react-router-dom";
 import axios from 'axios';
+import { ScheduleData } from './model/ScheduleData';
 
 const Schedule = () => {
-  const id = parseInt(useParams().id);
+  const id = parseInt(useParams<{id:string}>().id);
   const history = useHistory();
-  const emptySchedule = {
-    "user_id": 1,
-    "year": 2021,
-    "month": 1,
-    "day": 24,
-    "contents": "振替休日"
+  const emptySchedule:ScheduleData={
+    id:0,
+    user_id:0,
+    ymd_date:'2021-1-24',
+    contents:'',
   };
-  //const [scheduleList, setScheduleList] = useState([]);
   const [schedule, setSchedule] = useState(emptySchedule);
 
   useEffect(()=>{
@@ -24,7 +23,7 @@ const Schedule = () => {
     getSchedule();
   }, [id, setSchedule]);
 
-  const changeContents=(e)=>{
+  const changeContents=(e:React.ChangeEvent<HTMLInputElement>)=>{
     const newSchedule = Object.assign({},schedule);
     newSchedule.contents=e.target.value;
     setSchedule(newSchedule);
@@ -35,8 +34,6 @@ const Schedule = () => {
     const newSchedule = Object.assign({},schedule);
 
     delete newSchedule.id;
-    delete newSchedule.created_at;
-    delete newSchedule.updated_at;
 
     await axios.put(`http://localhost:4000/${id}`, newSchedule);
     console.log(newSchedule);
@@ -53,7 +50,7 @@ const Schedule = () => {
   return (
     <div>
       <h1>
-        {schedule.year}/{schedule.month}/{schedule.day}
+        {schedule.ymd_date}
       </h1>
       <div>{schedule.contents}</div>
       <input type='text' value={schedule.contents} onChange={changeContents}/>

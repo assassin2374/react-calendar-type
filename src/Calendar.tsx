@@ -2,24 +2,16 @@ import { useState, useEffect } from 'react';
 import './Calendar.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import { idText } from 'typescript';
+import { ScheduleData } from './model/ScheduleData';
 
-type Schedule = {
-  id:number,
-  user_id:number,
-  ymdData:string,
-  contents:string,
-};
-
-const sampleSchedule:Schedule={
+const sampleSchedule:ScheduleData={
   id:0,
   user_id:0,
-  ymdData:'',
+  ymd_date:'',
   contents:'',
 };
 
 const convertDateToString=(date:Date)=>{
-  //date.setDate(date.getDate());
   const yyyy = date.getFullYear();
   const mm = ("0"+(date.getMonth()+1)).slice(-2);
   const dd = ("0"+date.getDate()).slice(-2);
@@ -27,7 +19,7 @@ const convertDateToString=(date:Date)=>{
 };
 
 const Calendar = () => {
-  const [scheduleList, setScheduleList] = useState<Schedule[]>([sampleSchedule]);
+  const [scheduleList, setScheduleList] = useState([sampleSchedule]);
   const [contents, setContents] = useState('');
   const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
 
@@ -55,20 +47,21 @@ const Calendar = () => {
   
   const addSchedule=async()=>{
     if(contents==='')return;
-    let newId = 0;
-    if(scheduleList.length > 0){
-      newId = Math.max(...scheduleList.map((todo=>todo.id)));
-      newId++;
-    }
+    // let newId = 0;
+    // if(scheduleList.length > 0){
+    //   newId = Math.max(...scheduleList.map((todo=>todo.id)));
+    //   newId++;
+    // }
     const newScheduleList = scheduleList.slice();
-    const newSchedule ={
-      id:newId,
+    const newSchedule:ScheduleData = {
       user_id:1,
-      ymdData:ymdData,
+      ymd_date:ymdData,
       contents:contents,
     };
 
-    await axios.post(`http://localhost:4000`, newSchedule);
+    const response = await axios.post<string>(`http://localhost:4000`, newSchedule);
+    const newId = response.data;
+    newSchedule.id = parseInt(newId);
     newScheduleList.push(newSchedule);
 
     setScheduleList(newScheduleList);
@@ -86,8 +79,8 @@ const Calendar = () => {
       <div>
         {scheduleList.map((schedule)=>{
           return(
-            <div schedule={schedule} key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
-              {schedule.year}/{schedule.month}/{schedule.day}
+            <div key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
+              {schedule.ymd_date}
             </div>
           )
         })}
