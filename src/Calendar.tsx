@@ -70,7 +70,7 @@ const Calendar = () => {
 
   return (
     <div>
-      <div>schedule</div>
+      <div>記念日クリエイター</div>
       <input type="date" value={ymdData} onChange={addYmdData}/>
       <div>
         <input type='text' value={contents} onChange={addContents}/>
@@ -80,7 +80,7 @@ const Calendar = () => {
         {scheduleList.map((schedule)=>{
           return(
             <div key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
-              {schedule.ymd_date}
+              {schedule.ymd_date}/{schedule.contents}
             </div>
           )
         })}
