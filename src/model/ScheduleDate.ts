@@ -1,4 +1,4 @@
-export type ScheduleData = {
+export type ScheduleDate = {
   id?:number,
   user_id:number,
   ymd_date:string,

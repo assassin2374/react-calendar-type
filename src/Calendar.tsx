@@ -2,20 +2,14 @@ import { useState, useEffect } from 'react';
 import './Calendar.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import { ScheduleData } from './model/ScheduleData';
+import { ScheduleDate } from './model/ScheduleDate';
+import { convertDateToString } from './covert/ConvertDate'
 
-const sampleSchedule:ScheduleData={
+const sampleSchedule:ScheduleDate={
   id:0,
   user_id:0,
   ymd_date:'',
   contents:'',
-};
-
-const convertDateToString=(date:Date)=>{
-  const yyyy = date.getFullYear();
-  const mm = ("0"+(date.getMonth()+1)).slice(-2);
-  const dd = ("0"+date.getDate()).slice(-2);
-  return yyyy+'-'+mm+'-'+dd;
 };
 
 const Calendar = () => {
@@ -47,13 +41,8 @@ const Calendar = () => {
   
   const addSchedule=async()=>{
     if(contents==='')return;
-    // let newId = 0;
-    // if(scheduleList.length > 0){
-    //   newId = Math.max(...scheduleList.map((todo=>todo.id)));
-    //   newId++;
-    // }
     const newScheduleList = scheduleList.slice();
-    const newSchedule:ScheduleData = {
+    const newSchedule:ScheduleDate = {
       user_id:1,
       ymd_date:ymdData,
       contents:contents,

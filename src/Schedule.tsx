@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import './Schedule.css';
 import { useHistory, useParams } from "react-router-dom";
 import axios from 'axios';
-import { ScheduleData } from './model/ScheduleData';
+import { ScheduleDate } from './model/ScheduleDate';
+//import { convertDateToString } from './covert/ConvertDate'
 
 const Schedule = () => {
   const id = parseInt(useParams<{id:string}>().id);
   const history = useHistory();
-  const emptySchedule:ScheduleData={
+  const emptySchedule:ScheduleDate={
     id:0,
     user_id:0,
     ymd_date:'2021-1-24',
