@@ -1,19 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './Calendar.css';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import { ScheduleDate } from './model/ScheduleDate';
-import { convertDateToString } from './covert/ConvertDate'
-
-const sampleSchedule:ScheduleDate={
-  id:0,
-  user_id:0,
-  ymd_date:'',
-  contents:'',
-};
+import { ScheduleDate, initScheduleDate } from './model/ScheduleDate';
+import { convertDateToString } from './covert/ConvertDate';
+import { Drawing } from './component/Drawing';
+import { List } from './component/List';
+import { ScheduleListContext } from './context/ScheduleListContext';
 
 const Calendar = () => {
-  const [scheduleList, setScheduleList] = useState([sampleSchedule]);
+  const [scheduleList, setScheduleList] = useState([initScheduleDate]);
+  //const {scheduleList, setScheduleList} = useContext([ScheduleListContext]);
   const [contents, setContents] = useState('');
   const [ymdData, setYmdData] = useState(convertDateToString(new Date()));
 
@@ -60,12 +57,14 @@ const Calendar = () => {
   return (
     <div>
       <div>記念日クリエイター</div>
+      <Drawing />
       <input type="date" value={ymdData} onChange={addYmdData}/>
       <div>
         <input type='text' value={contents} onChange={addContents}/>
         <button onClick={addSchedule}>追加</button>
       </div>
-      <div>
+      <List value={scheduleList} />
+      {/* <div>
         {scheduleList.map((schedule)=>{
           return(
             <div key={schedule.id} onClick={()=> history.push(`/schedule/${schedule.id}`)}>
@@ -73,7 +72,7 @@ const Calendar = () => {
             </div>
           )
         })}
-      </div>
+      </div> */}
     </div>
   );
 };
