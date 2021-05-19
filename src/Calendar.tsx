@@ -63,7 +63,7 @@ const Calendar = () => {
         <input type='text' value={contents} onChange={addContents}/>
         <button onClick={addSchedule}>追加</button>
       </div>
-      <List value={scheduleList} />
+      <List value={scheduleList} onClick={()=> history.push(`/schedule/${schedule.id}`)} />
       {/* <div>
         {scheduleList.map((schedule)=>{
           return(
